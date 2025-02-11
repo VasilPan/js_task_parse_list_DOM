@@ -1,39 +1,25 @@
 'use strict';
 
-const list = document.querySelectorAll('li');
+const employeesList = document.querySelector('ul');
 
-const allPerson = [];
+const arrayEmpl = Array.from(employeesList.children);
 
-function createMassivPerson(listPerson) {
-  for (let i = 0; i < list.length; i++) {
-    const person = {};
-
-    person.name = list[i].textContent.trim();
-    person.position = list[i].getAttribute('data-position');
-    person.salary = list[i].getAttribute('data-salary');
-    person.age = list[i].getAttribute('data-age');
-    allPerson.push(person);
-  }
-}
-
-function filterObject(persons) {
-  persons.sort((a, b) => {
+function sortArayEmployes(masiv) {
+  masiv.sort((a, b) => {
     return (
-      +b['salary'].match(/\d/g).join('') - +a['salary'].match(/\d/g).join('')
+      +b.getAttribute('data-salary').match(/\d/g).join('') -
+      +a.getAttribute('data-salary').match(/\d/g).join('')
     );
   });
 }
-createMassivPerson(list);
-filterObject(allPerson);
 
-const allElement = document.querySelector('ul');
+function getEmployees(list) {
+  employeesList.innerHTML = '';
 
-allElement.innerHTML = '';
-allElement.style.listStyle = 'square inside';
-
-for (const one of allPerson) {
-  const person = document.createElement('li');
-
-  person.textContent = one.name;
-  allElement.append(person);
+  for (const employer of list) {
+    employeesList.append(employer);
+  }
 }
+
+sortArayEmployes(arrayEmpl);
+getEmployees(arrayEmpl);
